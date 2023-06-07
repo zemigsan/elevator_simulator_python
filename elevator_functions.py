@@ -1,3 +1,4 @@
+from collections import deque
 """
 A set of examples algorithms to operate the elevator. You can create your own and test the efficiency.
 Format of the fucntion receives current_minute and the Elevator System, and needs to adjust each elevator floor_queue as orders.
@@ -10,10 +11,11 @@ elevator_sim_naive: this is the most naive solution for the elevator problem, it
 def elevator_sim_naive_single_elevator(current_minute, elevator_system):
   elevators = elevator_system.elevators
   main_elevator = elevators[0]
-  main_elevator.floors_queue = list(main_elevator.floors_pressed.union(elevator_system.floors_requested)) 
+  main_elevator.floors_queue = deque(main_elevator.requested_floors.union(elevator_system.floors_requested))
+
   #the rest of elevators just keep going in the direction of the floors that are pressed
   for i in range(1, len(elevators)):
-    elevators[i].floors_queue = list(elevators[i].floors_pressed)
+    elevators[i].floors_queue = list(elevators[i].requested_floors)
 
 
 
@@ -28,9 +30,9 @@ def elevator_sim_naive_multiple_elevators(current_minute, elevator_system):
   
   #adds first all requested elevators in the queue
   for i in range(0, len(elevators)):
-    elevators[i].floors_queue = []
-    for floor in elevators[i].floors_pressed:
-      elevators[i].floors_queue.append(floor)
+    elevators[i].floors_queue = deque()
+    for floor in elevators[i].requested_floors:
+      elevators[default_elevator].floors_queue.append(floor)
       floor_elevator[floor] = i
 
   # adds new floors that were pressed/request

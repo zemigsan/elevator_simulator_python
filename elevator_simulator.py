@@ -90,7 +90,7 @@ class ElevatorSimulator:
         floor_destination = people[2]
         el = self.elevator_system.elevators[elevator_id]
         #if elevator has free capacity removes from queue and adds
-        if el.get_free_capacity() >= number_of_people:
+        if el.free_capacity >= number_of_people:
             el.add_occupants(number_of_people, floor_destination)
             self.people_queue_elevators[elevator_id].append(people)
             self.people_queue.remove(people)
